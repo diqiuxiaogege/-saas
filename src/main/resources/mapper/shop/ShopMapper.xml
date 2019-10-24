@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tuiba.saasadmininster.shop.dao.ShopMapper" >
+  <resultMap id="BaseResultMap" type="com.tuiba.saasadmininster.shop.bean.Shop" >
+    <id column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="shop_num" property="shopNum" jdbcType="INTEGER" />
+    <result column="shop_score" property="shopScore" jdbcType="INTEGER" />
+    <result column="shop_add_date" property="shopAddDate" jdbcType="BIGINT" />
+    <result column="shop_modify_date" property="shopModifyDate" jdbcType="BIGINT" />
+    <result column="shop_img" property="shopImg" jdbcType="VARCHAR" />
+    <result column="shop_miaoshu" property="shopMiaoshu" jdbcType="VARCHAR" />
+    <result column="shop_status" property="shopStatus" jdbcType="INTEGER" />
+    <result column="shop_delete_type" property="shopDeleteType" jdbcType="INTEGER" />
+    <result column="bak1" property="bak1" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tuiba.saasadmininster.shop.bean.Shop" extends="BaseResultMap" >
+    <result column="shop_xiangqing" property="shopXiangqing" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    shop_id, shop_name, shop_num, shop_score, shop_add_date, shop_modify_date, shop_img, 
+    shop_miaoshu, shop_status, shop_delete_type, bak1
+  </sql>
+  <sql id="Blob_Column_List" >
+    shop_xiangqing
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.tuiba.saasadmininster.shop.bean.ShopExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tuiba.saasadmininster.shop.bean.ShopExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from shop
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shop
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tuiba.saasadmininster.shop.bean.ShopExample" >
+    delete from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tuiba.saasadmininster.shop.bean.Shop" >
+    insert into shop (shop_id, shop_name, shop_num, 
+      shop_score, shop_add_date, shop_modify_date, 
+      shop_img, shop_miaoshu, shop_status, 
+      shop_delete_type, bak1, shop_xiangqing
+      )
+    values (#{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{shopNum,jdbcType=INTEGER}, 
+      #{shopScore,jdbcType=INTEGER}, #{shopAddDate,jdbcType=BIGINT}, #{shopModifyDate,jdbcType=BIGINT}, 
+      #{shopImg,jdbcType=VARCHAR}, #{shopMiaoshu,jdbcType=VARCHAR}, #{shopStatus,jdbcType=INTEGER}, 
+      #{shopDeleteType,jdbcType=INTEGER}, #{bak1,jdbcType=VARCHAR}, #{shopXiangqing,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tuiba.saasadmininster.shop.bean.Shop" >
+    insert into shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="shopNum != null" >
+        shop_num,
+      </if>
+      <if test="shopScore != null" >
+        shop_score,
+      </if>
+      <if test="shopAddDate != null" >
+        shop_add_date,
+      </if>
+      <if test="shopModifyDate != null" >
+        shop_modify_date,
+      </if>
+      <if test="shopImg != null" >
+        shop_img,
+      </if>
+      <if test="shopMiaoshu != null" >
+        shop_miaoshu,
+      </if>
+      <if test="shopStatus != null" >
+        shop_status,
+      </if>
+      <if test="shopDeleteType != null" >
+        shop_delete_type,
+      </if>
+      <if test="bak1 != null" >
+        bak1,
+      </if>
+      <if test="shopXiangqing != null" >
+        shop_xiangqing,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNum != null" >
+        #{shopNum,jdbcType=INTEGER},
+      </if>
+      <if test="shopScore != null" >
+        #{shopScore,jdbcType=INTEGER},
+      </if>
+      <if test="shopAddDate != null" >
+        #{shopAddDate,jdbcType=BIGINT},
+      </if>
+      <if test="shopModifyDate != null" >
+        #{shopModifyDate,jdbcType=BIGINT},
+      </if>
+      <if test="shopImg != null" >
+        #{shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="shopMiaoshu != null" >
+        #{shopMiaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="shopStatus != null" >
+        #{shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="shopDeleteType != null" >
+        #{shopDeleteType,jdbcType=INTEGER},
+      </if>
+      <if test="bak1 != null" >
+        #{bak1,jdbcType=VARCHAR},
+      </if>
+      <if test="shopXiangqing != null" >
+        #{shopXiangqing,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tuiba.saasadmininster.shop.bean.ShopExample" resultType="java.lang.Integer" >
+    select count(*) from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update shop
+    <set >
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopName != null" >
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopNum != null" >
+        shop_num = #{record.shopNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopScore != null" >
+        shop_score = #{record.shopScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopAddDate != null" >
+        shop_add_date = #{record.shopAddDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopModifyDate != null" >
+        shop_modify_date = #{record.shopModifyDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopImg != null" >
+        shop_img = #{record.shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopMiaoshu != null" >
+        shop_miaoshu = #{record.shopMiaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopStatus != null" >
+        shop_status = #{record.shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopDeleteType != null" >
+        shop_delete_type = #{record.shopDeleteType,jdbcType=INTEGER},
+      </if>
+      <if test="record.bak1 != null" >
+        bak1 = #{record.bak1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopXiangqing != null" >
+        shop_xiangqing = #{record.shopXiangqing,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update shop
+    set shop_id = #{record.shopId,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_num = #{record.shopNum,jdbcType=INTEGER},
+      shop_score = #{record.shopScore,jdbcType=INTEGER},
+      shop_add_date = #{record.shopAddDate,jdbcType=BIGINT},
+      shop_modify_date = #{record.shopModifyDate,jdbcType=BIGINT},
+      shop_img = #{record.shopImg,jdbcType=VARCHAR},
+      shop_miaoshu = #{record.shopMiaoshu,jdbcType=VARCHAR},
+      shop_status = #{record.shopStatus,jdbcType=INTEGER},
+      shop_delete_type = #{record.shopDeleteType,jdbcType=INTEGER},
+      bak1 = #{record.bak1,jdbcType=VARCHAR},
+      shop_xiangqing = #{record.shopXiangqing,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update shop
+    set shop_id = #{record.shopId,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_num = #{record.shopNum,jdbcType=INTEGER},
+      shop_score = #{record.shopScore,jdbcType=INTEGER},
+      shop_add_date = #{record.shopAddDate,jdbcType=BIGINT},
+      shop_modify_date = #{record.shopModifyDate,jdbcType=BIGINT},
+      shop_img = #{record.shopImg,jdbcType=VARCHAR},
+      shop_miaoshu = #{record.shopMiaoshu,jdbcType=VARCHAR},
+      shop_status = #{record.shopStatus,jdbcType=INTEGER},
+      shop_delete_type = #{record.shopDeleteType,jdbcType=INTEGER},
+      bak1 = #{record.bak1,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tuiba.saasadmininster.shop.bean.Shop" >
+    update shop
+    <set >
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNum != null" >
+        shop_num = #{shopNum,jdbcType=INTEGER},
+      </if>
+      <if test="shopScore != null" >
+        shop_score = #{shopScore,jdbcType=INTEGER},
+      </if>
+      <if test="shopAddDate != null" >
+        shop_add_date = #{shopAddDate,jdbcType=BIGINT},
+      </if>
+      <if test="shopModifyDate != null" >
+        shop_modify_date = #{shopModifyDate,jdbcType=BIGINT},
+      </if>
+      <if test="shopImg != null" >
+        shop_img = #{shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="shopMiaoshu != null" >
+        shop_miaoshu = #{shopMiaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="shopStatus != null" >
+        shop_status = #{shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="shopDeleteType != null" >
+        shop_delete_type = #{shopDeleteType,jdbcType=INTEGER},
+      </if>
+      <if test="bak1 != null" >
+        bak1 = #{bak1,jdbcType=VARCHAR},
+      </if>
+      <if test="shopXiangqing != null" >
+        shop_xiangqing = #{shopXiangqing,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tuiba.saasadmininster.shop.bean.Shop" >
+    update shop
+    set shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_num = #{shopNum,jdbcType=INTEGER},
+      shop_score = #{shopScore,jdbcType=INTEGER},
+      shop_add_date = #{shopAddDate,jdbcType=BIGINT},
+      shop_modify_date = #{shopModifyDate,jdbcType=BIGINT},
+      shop_img = #{shopImg,jdbcType=VARCHAR},
+      shop_miaoshu = #{shopMiaoshu,jdbcType=VARCHAR},
+      shop_status = #{shopStatus,jdbcType=INTEGER},
+      shop_delete_type = #{shopDeleteType,jdbcType=INTEGER},
+      bak1 = #{bak1,jdbcType=VARCHAR},
+      shop_xiangqing = #{shopXiangqing,jdbcType=LONGVARCHAR}
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tuiba.saasadmininster.shop.bean.Shop" >
+    update shop
+    set shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_num = #{shopNum,jdbcType=INTEGER},
+      shop_score = #{shopScore,jdbcType=INTEGER},
+      shop_add_date = #{shopAddDate,jdbcType=BIGINT},
+      shop_modify_date = #{shopModifyDate,jdbcType=BIGINT},
+      shop_img = #{shopImg,jdbcType=VARCHAR},
+      shop_miaoshu = #{shopMiaoshu,jdbcType=VARCHAR},
+      shop_status = #{shopStatus,jdbcType=INTEGER},
+      shop_delete_type = #{shopDeleteType,jdbcType=INTEGER},
+      bak1 = #{bak1,jdbcType=VARCHAR}
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </update>
+</mapper>

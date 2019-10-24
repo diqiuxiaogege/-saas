@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tuiba.saasadmininster.wdqzComment.dao.Wdqz_commentMapper" >
+  <resultMap id="BaseResultMap" type="com.tuiba.saasadmininster.wdqzComment.bean.Wdqz_comment" >
+    <id column="wdqz_comment_id" property="wdqzCommentId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="wdqz_id" property="wdqzId" jdbcType="INTEGER" />
+    <result column="wdqz_comment_content" property="wdqzCommentContent" jdbcType="VARCHAR" />
+    <result column="wqdz_comment_date" property="wqdzCommentDate" jdbcType="BIGINT" />
+    <result column="wqdz_comment_type_id" property="wqdzCommentTypeId" jdbcType="INTEGER" />
+    <result column="wdqz_comment_status" property="wdqzCommentStatus" jdbcType="INTEGER" />
+    <result column="wdqz_comment_status_time" property="wdqzCommentStatusTime" jdbcType="BIGINT" />
+    <result column="bak1" property="bak1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    wdqz_comment_id, user_id, wdqz_id, wdqz_comment_content, wqdz_comment_date, wqdz_comment_type_id, 
+    wdqz_comment_status, wdqz_comment_status_time, bak1
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tuiba.saasadmininster.wdqzComment.bean.Wdqz_commentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wdqz_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from wdqz_comment
+    where wdqz_comment_id = #{wdqzCommentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wdqz_comment
+    where wdqz_comment_id = #{wdqzCommentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tuiba.saasadmininster.wdqzComment.bean.Wdqz_commentExample" >
+    delete from wdqz_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tuiba.saasadmininster.wdqzComment.bean.Wdqz_comment" >
+    insert into wdqz_comment (wdqz_comment_id, user_id, wdqz_id, 
+      wdqz_comment_content, wqdz_comment_date, wqdz_comment_type_id, 
+      wdqz_comment_status, wdqz_comment_status_time, 
+      bak1)
+    values (#{wdqzCommentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{wdqzId,jdbcType=INTEGER}, 
+      #{wdqzCommentContent,jdbcType=VARCHAR}, #{wqdzCommentDate,jdbcType=BIGINT}, #{wqdzCommentTypeId,jdbcType=INTEGER}, 
+      #{wdqzCommentStatus,jdbcType=INTEGER}, #{wdqzCommentStatusTime,jdbcType=BIGINT}, 
+      #{bak1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tuiba.saasadmininster.wdqzComment.bean.Wdqz_comment" >
+    insert into wdqz_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wdqzCommentId != null" >
+        wdqz_comment_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="wdqzId != null" >
+        wdqz_id,
+      </if>
+      <if test="wdqzCommentContent != null" >
+        wdqz_comment_content,
+      </if>
+      <if test="wqdzCommentDate != null" >
+        wqdz_comment_date,
+      </if>
+      <if test="wqdzCommentTypeId != null" >
+        wqdz_comment_type_id,
+      </if>
+      <if test="wdqzCommentStatus != null" >
+        wdqz_comment_status,
+      </if>
+      <if test="wdqzCommentStatusTime != null" >
+        wdqz_comment_status_time,
+      </if>
+      <if test="bak1 != null" >
+        bak1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wdqzCommentId != null" >
+        #{wdqzCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="wdqzId != null" >
+        #{wdqzId,jdbcType=INTEGER},
+      </if>
+      <if test="wdqzCommentContent != null" >
+        #{wdqzCommentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="wqdzCommentDate != null" >
+        #{wqdzCommentDate,jdbcType=BIGINT},
+      </if>
+      <if test="wqdzCommentTypeId != null" >
+        #{wqdzCommentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="wdqzCommentStatus != null" >
+        #{wdqzCommentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="wdqzCommentStatusTime != null" >
+        #{wdqzCommentStatusTime,jdbcType=BIGINT},
+      </if>
+      <if test="bak1 != null" >
+        #{bak1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tuiba.saasadmininster.wdqzComment.bean.Wdqz_commentExample" resultType="java.lang.Integer" >
+    select count(*) from wdqz_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update wdqz_comment
+    <set >
+      <if test="record.wdqzCommentId != null" >
+        wdqz_comment_id = #{record.wdqzCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wdqzId != null" >
+        wdqz_id = #{record.wdqzId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wdqzCommentContent != null" >
+        wdqz_comment_content = #{record.wdqzCommentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wqdzCommentDate != null" >
+        wqdz_comment_date = #{record.wqdzCommentDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.wqdzCommentTypeId != null" >
+        wqdz_comment_type_id = #{record.wqdzCommentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wdqzCommentStatus != null" >
+        wdqz_comment_status = #{record.wdqzCommentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.wdqzCommentStatusTime != null" >
+        wdqz_comment_status_time = #{record.wdqzCommentStatusTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.bak1 != null" >
+        bak1 = #{record.bak1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update wdqz_comment
+    set wdqz_comment_id = #{record.wdqzCommentId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      wdqz_id = #{record.wdqzId,jdbcType=INTEGER},
+      wdqz_comment_content = #{record.wdqzCommentContent,jdbcType=VARCHAR},
+      wqdz_comment_date = #{record.wqdzCommentDate,jdbcType=BIGINT},
+      wqdz_comment_type_id = #{record.wqdzCommentTypeId,jdbcType=INTEGER},
+      wdqz_comment_status = #{record.wdqzCommentStatus,jdbcType=INTEGER},
+      wdqz_comment_status_time = #{record.wdqzCommentStatusTime,jdbcType=BIGINT},
+      bak1 = #{record.bak1,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tuiba.saasadmininster.wdqzComment.bean.Wdqz_comment" >
+    update wdqz_comment
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="wdqzId != null" >
+        wdqz_id = #{wdqzId,jdbcType=INTEGER},
+      </if>
+      <if test="wdqzCommentContent != null" >
+        wdqz_comment_content = #{wdqzCommentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="wqdzCommentDate != null" >
+        wqdz_comment_date = #{wqdzCommentDate,jdbcType=BIGINT},
+      </if>
+      <if test="wqdzCommentTypeId != null" >
+        wqdz_comment_type_id = #{wqdzCommentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="wdqzCommentStatus != null" >
+        wdqz_comment_status = #{wdqzCommentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="wdqzCommentStatusTime != null" >
+        wdqz_comment_status_time = #{wdqzCommentStatusTime,jdbcType=BIGINT},
+      </if>
+      <if test="bak1 != null" >
+        bak1 = #{bak1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wdqz_comment_id = #{wdqzCommentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tuiba.saasadmininster.wdqzComment.bean.Wdqz_comment" >
+    update wdqz_comment
+    set user_id = #{userId,jdbcType=INTEGER},
+      wdqz_id = #{wdqzId,jdbcType=INTEGER},
+      wdqz_comment_content = #{wdqzCommentContent,jdbcType=VARCHAR},
+      wqdz_comment_date = #{wqdzCommentDate,jdbcType=BIGINT},
+      wqdz_comment_type_id = #{wqdzCommentTypeId,jdbcType=INTEGER},
+      wdqz_comment_status = #{wdqzCommentStatus,jdbcType=INTEGER},
+      wdqz_comment_status_time = #{wdqzCommentStatusTime,jdbcType=BIGINT},
+      bak1 = #{bak1,jdbcType=VARCHAR}
+    where wdqz_comment_id = #{wdqzCommentId,jdbcType=INTEGER}
+  </update>
+</mapper>

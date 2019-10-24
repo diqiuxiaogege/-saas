@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tuiba.saasadmininster.forum.dao.ForumMapper" >
+  <resultMap id="BaseResultMap" type="com.tuiba.saasadmininster.forum.bean.Forum" >
+    <id column="forum_id" property="forumId" jdbcType="INTEGER" />
+    <result column="forum_name" property="forumName" jdbcType="VARCHAR" />
+    <result column="forum_date" property="forumDate" jdbcType="BIGINT" />
+    <result column="forum_modify_date" property="forumModifyDate" jdbcType="BIGINT" />
+    <result column="forum_type" property="forumType" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="bak1" property="bak1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    forum_id, forum_name, forum_date, forum_modify_date, forum_type, product_id, bak1
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tuiba.saasadmininster.forum.bean.ForumExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from forum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from forum
+    where forum_id = #{forumId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from forum
+    where forum_id = #{forumId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tuiba.saasadmininster.forum.bean.ForumExample" >
+    delete from forum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tuiba.saasadmininster.forum.bean.Forum" >
+    insert into forum (forum_id, forum_name, forum_date, 
+      forum_modify_date, forum_type, product_id, 
+      bak1)
+    values (#{forumId,jdbcType=INTEGER}, #{forumName,jdbcType=VARCHAR}, #{forumDate,jdbcType=BIGINT}, 
+      #{forumModifyDate,jdbcType=BIGINT}, #{forumType,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{bak1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tuiba.saasadmininster.forum.bean.Forum" >
+    insert into forum
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="forumId != null" >
+        forum_id,
+      </if>
+      <if test="forumName != null" >
+        forum_name,
+      </if>
+      <if test="forumDate != null" >
+        forum_date,
+      </if>
+      <if test="forumModifyDate != null" >
+        forum_modify_date,
+      </if>
+      <if test="forumType != null" >
+        forum_type,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="bak1 != null" >
+        bak1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="forumId != null" >
+        #{forumId,jdbcType=INTEGER},
+      </if>
+      <if test="forumName != null" >
+        #{forumName,jdbcType=VARCHAR},
+      </if>
+      <if test="forumDate != null" >
+        #{forumDate,jdbcType=BIGINT},
+      </if>
+      <if test="forumModifyDate != null" >
+        #{forumModifyDate,jdbcType=BIGINT},
+      </if>
+      <if test="forumType != null" >
+        #{forumType,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="bak1 != null" >
+        #{bak1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tuiba.saasadmininster.forum.bean.ForumExample" resultType="java.lang.Integer" >
+    select count(*) from forum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update forum
+    <set >
+      <if test="record.forumId != null" >
+        forum_id = #{record.forumId,jdbcType=INTEGER},
+      </if>
+      <if test="record.forumName != null" >
+        forum_name = #{record.forumName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forumDate != null" >
+        forum_date = #{record.forumDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.forumModifyDate != null" >
+        forum_modify_date = #{record.forumModifyDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.forumType != null" >
+        forum_type = #{record.forumType,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bak1 != null" >
+        bak1 = #{record.bak1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update forum
+    set forum_id = #{record.forumId,jdbcType=INTEGER},
+      forum_name = #{record.forumName,jdbcType=VARCHAR},
+      forum_date = #{record.forumDate,jdbcType=BIGINT},
+      forum_modify_date = #{record.forumModifyDate,jdbcType=BIGINT},
+      forum_type = #{record.forumType,jdbcType=INTEGER},
+      product_id = #{record.productId,jdbcType=INTEGER},
+      bak1 = #{record.bak1,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tuiba.saasadmininster.forum.bean.Forum" >
+    update forum
+    <set >
+      <if test="forumName != null" >
+        forum_name = #{forumName,jdbcType=VARCHAR},
+      </if>
+      <if test="forumDate != null" >
+        forum_date = #{forumDate,jdbcType=BIGINT},
+      </if>
+      <if test="forumModifyDate != null" >
+        forum_modify_date = #{forumModifyDate,jdbcType=BIGINT},
+      </if>
+      <if test="forumType != null" >
+        forum_type = #{forumType,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="bak1 != null" >
+        bak1 = #{bak1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where forum_id = #{forumId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tuiba.saasadmininster.forum.bean.Forum" >
+    update forum
+    set forum_name = #{forumName,jdbcType=VARCHAR},
+      forum_date = #{forumDate,jdbcType=BIGINT},
+      forum_modify_date = #{forumModifyDate,jdbcType=BIGINT},
+      forum_type = #{forumType,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      bak1 = #{bak1,jdbcType=VARCHAR}
+    where forum_id = #{forumId,jdbcType=INTEGER}
+  </update>
+</mapper>

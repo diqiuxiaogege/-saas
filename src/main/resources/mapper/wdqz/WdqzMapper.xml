@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuiba.saasadmininster.wdqz.dao.WdqzMapper">
+    <resultMap id="BaseResultMap" type="com.tuiba.saasadmininster.wdqz.bean.Wdqz">
+        <id column="wdqz_id" jdbcType="INTEGER" property="wdqzId"/>
+        <result column="forum_id" jdbcType="INTEGER" property="forumId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="wdqz_title" jdbcType="VARCHAR" property="wdqzTitle"/>
+        <result column="wdqz_content" jdbcType="VARCHAR" property="wdqzContent"/>
+        <result column="wdqz_img" jdbcType="VARCHAR" property="wdqzImg"/>
+        <result column="wdqz_voice" jdbcType="VARCHAR" property="wdqzVoice"/>
+        <result column="wdqz_score" jdbcType="VARCHAR" property="wdqzScore"/>
+        <result column="wdqz_dianzan" jdbcType="INTEGER" property="wdqzDianzan"/>
+        <result column="wdqz_publish_time" jdbcType="BIGINT" property="wdqzPublishTime"/>
+        <result column="wdqz_modify_time" jdbcType="BIGINT" property="wdqzModifyTime"/>
+        <result column="wdqz_adoption" jdbcType="INTEGER" property="wdqzAdoption"/>
+        <result column="wdqz_status" jdbcType="INTEGER" property="wdqzStatus"/>
+        <result column="wdqz_top_time" jdbcType="BIGINT" property="wdqzTopTime"/>
+        <result column="wdqz_cance_top_time" jdbcType="BIGINT" property="wdqzCanceTopTime"/>
+        <result column="bak1" jdbcType="VARCHAR" property="bak1"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    wdqz_id, forum_id, user_id, wdqz_title, wdqz_content, wdqz_img, wdqz_voice, wdqz_score, 
+    wdqz_dianzan, wdqz_publish_time, wdqz_modify_time, wdqz_adoption, wdqz_status, wdqz_top_time, 
+    wdqz_cance_top_time, bak1
+  </sql>
+    <select id="selectByExample" parameterType="com.tuiba.saasadmininster.wdqz.bean.WdqzExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from wdqz
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause} DESC
+        </if>
+    </select>
+    <select id="selectByStatusExample" parameterType="com.tuiba.saasadmininster.wdqz.bean.WdqzExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            *
+            FROM wdqz
+            WHERE wdqz_status=4
+            ORDER BY
+            wdqz_top_time DESC
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wdqz
+        where wdqz_id = #{wdqzId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wdqz
+    where wdqz_id = #{wdqzId,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.tuiba.saasadmininster.wdqz.bean.WdqzExample">
+        delete from wdqz
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.tuiba.saasadmininster.wdqz.bean.Wdqz">
+    insert into wdqz (wdqz_id, forum_id, user_id, 
+      wdqz_title, wdqz_content, wdqz_img, 
+      wdqz_voice, wdqz_score, wdqz_dianzan, 
+      wdqz_publish_time, wdqz_modify_time, wdqz_adoption, 
+      wdqz_status, wdqz_top_time, wdqz_cance_top_time, 
+      bak1)
+    values (#{wdqzId,jdbcType=INTEGER}, #{forumId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{wdqzTitle,jdbcType=VARCHAR}, #{wdqzContent,jdbcType=VARCHAR}, #{wdqzImg,jdbcType=VARCHAR}, 
+      #{wdqzVoice,jdbcType=VARCHAR}, #{wdqzScore,jdbcType=VARCHAR}, #{wdqzDianzan,jdbcType=INTEGER}, 
+      #{wdqzPublishTime,jdbcType=BIGINT}, #{wdqzModifyTime,jdbcType=BIGINT}, #{wdqzAdoption,jdbcType=INTEGER}, 
+      #{wdqzStatus,jdbcType=INTEGER}, #{wdqzTopTime,jdbcType=BIGINT}, #{wdqzCanceTopTime,jdbcType=BIGINT}, 
+      #{bak1,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.tuiba.saasadmininster.wdqz.bean.Wdqz">
+        insert into wdqz
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wdqzId != null">
+                wdqz_id,
+            </if>
+            <if test="forumId != null">
+                forum_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="wdqzTitle != null">
+                wdqz_title,
+            </if>
+            <if test="wdqzContent != null">
+                wdqz_content,
+            </if>
+            <if test="wdqzImg != null">
+                wdqz_img,
+            </if>
+            <if test="wdqzVoice != null">
+                wdqz_voice,
+            </if>
+            <if test="wdqzScore != null">
+                wdqz_score,
+            </if>
+            <if test="wdqzDianzan != null">
+                wdqz_dianzan,
+            </if>
+            <if test="wdqzPublishTime != null">
+                wdqz_publish_time,
+            </if>
+            <if test="wdqzModifyTime != null">
+                wdqz_modify_time,
+            </if>
+            <if test="wdqzAdoption != null">
+                wdqz_adoption,
+            </if>
+            <if test="wdqzStatus != null">
+                wdqz_status,
+            </if>
+            <if test="wdqzTopTime != null">
+                wdqz_top_time,
+            </if>
+            <if test="wdqzCanceTopTime != null">
+                wdqz_cance_top_time,
+            </if>
+            <if test="bak1 != null">
+                bak1,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wdqzId != null">
+                #{wdqzId,jdbcType=INTEGER},
+            </if>
+            <if test="forumId != null">
+                #{forumId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="wdqzTitle != null">
+                #{wdqzTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzContent != null">
+                #{wdqzContent,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzImg != null">
+                #{wdqzImg,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzVoice != null">
+                #{wdqzVoice,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzScore != null">
+                #{wdqzScore,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzDianzan != null">
+                #{wdqzDianzan,jdbcType=INTEGER},
+            </if>
+            <if test="wdqzPublishTime != null">
+                #{wdqzPublishTime,jdbcType=BIGINT},
+            </if>
+            <if test="wdqzModifyTime != null">
+                #{wdqzModifyTime,jdbcType=BIGINT},
+            </if>
+            <if test="wdqzAdoption != null">
+                #{wdqzAdoption,jdbcType=INTEGER},
+            </if>
+            <if test="wdqzStatus != null">
+                #{wdqzStatus,jdbcType=INTEGER},
+            </if>
+            <if test="wdqzTopTime != null">
+                #{wdqzTopTime,jdbcType=BIGINT},
+            </if>
+            <if test="wdqzCanceTopTime != null">
+                #{wdqzCanceTopTime,jdbcType=BIGINT},
+            </if>
+            <if test="bak1 != null">
+                #{bak1,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.tuiba.saasadmininster.wdqz.bean.WdqzExample"
+            resultType="java.lang.Integer">
+        select count(*) from wdqz
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update wdqz
+        <set>
+            <if test="record.wdqzId != null">
+                wdqz_id = #{record.wdqzId,jdbcType=INTEGER},
+            </if>
+            <if test="record.forumId != null">
+                forum_id = #{record.forumId,jdbcType=INTEGER},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=INTEGER},
+            </if>
+            <if test="record.wdqzTitle != null">
+                wdqz_title = #{record.wdqzTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wdqzContent != null">
+                wdqz_content = #{record.wdqzContent,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wdqzImg != null">
+                wdqz_img = #{record.wdqzImg,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wdqzVoice != null">
+                wdqz_voice = #{record.wdqzVoice,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wdqzScore != null">
+                wdqz_score = #{record.wdqzScore,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wdqzDianzan != null">
+                wdqz_dianzan = #{record.wdqzDianzan,jdbcType=INTEGER},
+            </if>
+            <if test="record.wdqzPublishTime != null">
+                wdqz_publish_time = #{record.wdqzPublishTime,jdbcType=BIGINT},
+            </if>
+            <if test="record.wdqzModifyTime != null">
+                wdqz_modify_time = #{record.wdqzModifyTime,jdbcType=BIGINT},
+            </if>
+            <if test="record.wdqzAdoption != null">
+                wdqz_adoption = #{record.wdqzAdoption,jdbcType=INTEGER},
+            </if>
+            <if test="record.wdqzStatus != null">
+                wdqz_status = #{record.wdqzStatus,jdbcType=INTEGER},
+            </if>
+            <if test="record.wdqzTopTime != null">
+                wdqz_top_time = #{record.wdqzTopTime,jdbcType=BIGINT},
+            </if>
+            <if test="record.wdqzCanceTopTime != null">
+                wdqz_cance_top_time = #{record.wdqzCanceTopTime,jdbcType=BIGINT},
+            </if>
+            <if test="record.bak1 != null">
+                bak1 = #{record.bak1,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update wdqz
+        set wdqz_id = #{record.wdqzId,jdbcType=INTEGER},
+        forum_id = #{record.forumId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=INTEGER},
+        wdqz_title = #{record.wdqzTitle,jdbcType=VARCHAR},
+        wdqz_content = #{record.wdqzContent,jdbcType=VARCHAR},
+        wdqz_img = #{record.wdqzImg,jdbcType=VARCHAR},
+        wdqz_voice = #{record.wdqzVoice,jdbcType=VARCHAR},
+        wdqz_score = #{record.wdqzScore,jdbcType=VARCHAR},
+        wdqz_dianzan = #{record.wdqzDianzan,jdbcType=INTEGER},
+        wdqz_publish_time = #{record.wdqzPublishTime,jdbcType=BIGINT},
+        wdqz_modify_time = #{record.wdqzModifyTime,jdbcType=BIGINT},
+        wdqz_adoption = #{record.wdqzAdoption,jdbcType=INTEGER},
+        wdqz_status = #{record.wdqzStatus,jdbcType=INTEGER},
+        wdqz_top_time = #{record.wdqzTopTime,jdbcType=BIGINT},
+        wdqz_cance_top_time = #{record.wdqzCanceTopTime,jdbcType=BIGINT},
+        bak1 = #{record.bak1,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tuiba.saasadmininster.wdqz.bean.Wdqz">
+        update wdqz
+        <set>
+            <if test="forumId != null">
+                forum_id = #{forumId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="wdqzTitle != null">
+                wdqz_title = #{wdqzTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzContent != null">
+                wdqz_content = #{wdqzContent,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzImg != null">
+                wdqz_img = #{wdqzImg,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzVoice != null">
+                wdqz_voice = #{wdqzVoice,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzScore != null">
+                wdqz_score = #{wdqzScore,jdbcType=VARCHAR},
+            </if>
+            <if test="wdqzDianzan != null">
+                wdqz_dianzan = #{wdqzDianzan,jdbcType=INTEGER},
+            </if>
+            <if test="wdqzPublishTime != null">
+                wdqz_publish_time = #{wdqzPublishTime,jdbcType=BIGINT},
+            </if>
+            <if test="wdqzModifyTime != null">
+                wdqz_modify_time = #{wdqzModifyTime,jdbcType=BIGINT},
+            </if>
+            <if test="wdqzAdoption != null">
+                wdqz_adoption = #{wdqzAdoption,jdbcType=INTEGER},
+            </if>
+            <if test="wdqzStatus != null">
+                wdqz_status = #{wdqzStatus,jdbcType=INTEGER},
+            </if>
+            <if test="wdqzStatus!=null">
+
+            </if>
+            <if test="wdqzTopTime != null">
+                wdqz_top_time = #{wdqzTopTime,jdbcType=BIGINT},
+            </if>
+            <if test="wdqzCanceTopTime != null">
+                wdqz_cance_top_time = #{wdqzCanceTopTime,jdbcType=BIGINT},
+            </if>
+            <if test="bak1 != null">
+                bak1 = #{bak1,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where wdqz_id = #{wdqzId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tuiba.saasadmininster.wdqz.bean.Wdqz">
+    update wdqz
+    set forum_id = #{forumId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      wdqz_title = #{wdqzTitle,jdbcType=VARCHAR},
+      wdqz_content = #{wdqzContent,jdbcType=VARCHAR},
+      wdqz_img = #{wdqzImg,jdbcType=VARCHAR},
+      wdqz_voice = #{wdqzVoice,jdbcType=VARCHAR},
+      wdqz_score = #{wdqzScore,jdbcType=VARCHAR},
+      wdqz_dianzan = #{wdqzDianzan,jdbcType=INTEGER},
+      wdqz_publish_time = #{wdqzPublishTime,jdbcType=BIGINT},
+      wdqz_modify_time = #{wdqzModifyTime,jdbcType=BIGINT},
+      wdqz_adoption = #{wdqzAdoption,jdbcType=INTEGER},
+      wdqz_status = #{wdqzStatus,jdbcType=INTEGER},
+      wdqz_top_time = #{wdqzTopTime,jdbcType=BIGINT},
+      wdqz_cance_top_time = #{wdqzCanceTopTime,jdbcType=BIGINT},
+      bak1 = #{bak1,jdbcType=VARCHAR}
+    where wdqz_id = #{wdqzId,jdbcType=INTEGER}
+  </update>
+</mapper>

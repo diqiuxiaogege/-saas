@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tuiba.saasadmininster.xxfx.dao.XxfxMapper" >
+  <resultMap id="BaseResultMap" type="com.tuiba.saasadmininster.xxfx.bean.Xxfx" >
+    <id column="xxfx_id" property="xxfxId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="forum_id" property="forumId" jdbcType="INTEGER" />
+    <result column="xxfx_title" property="xxfxTitle" jdbcType="VARCHAR" />
+    <result column="xxfx_content" property="xxfxContent" jdbcType="VARCHAR" />
+    <result column="xxfx_product_type" property="xxfxProductType" jdbcType="VARCHAR" />
+    <result column="xxfx_dianzan" property="xxfxDianzan" jdbcType="INTEGER" />
+    <result column="xxfx_time" property="xxfxTime" jdbcType="BIGINT" />
+    <result column="xxfx_modify_time" property="xxfxModifyTime" jdbcType="BIGINT" />
+    <result column="xxfx_status" property="xxfxStatus" jdbcType="INTEGER" />
+    <result column="xxfx_top_time" property="xxfxTopTime" jdbcType="BIGINT" />
+    <result column="xxfx_cance_top_time" property="xxfxCanceTopTime" jdbcType="BIGINT" />
+    <result column="bak1" property="bak1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    xxfx_id, user_id, forum_id, xxfx_title, xxfx_content, xxfx_product_type, xxfx_dianzan, 
+    xxfx_time, xxfx_modify_time, xxfx_status, xxfx_top_time, xxfx_cance_top_time, bak1
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tuiba.saasadmininster.xxfx.bean.XxfxExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xxfx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByStatusExample" parameterType="com.tuiba.saasadmininster.xxfx.bean.XxfxExample"
+          resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      *
+      FROM xxfx
+      WHERE xxfx_status=5
+      ORDER BY
+      xxfx_top_time DESC
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from xxfx
+    where xxfx_id = #{xxfxId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from xxfx
+    where xxfx_id = #{xxfxId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tuiba.saasadmininster.xxfx.bean.XxfxExample" >
+    delete from xxfx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tuiba.saasadmininster.xxfx.bean.Xxfx" >
+    insert into xxfx (xxfx_id, user_id, forum_id, 
+      xxfx_title, xxfx_content, xxfx_product_type, 
+      xxfx_dianzan, xxfx_time, xxfx_modify_time, 
+      xxfx_status, xxfx_top_time, xxfx_cance_top_time, 
+      bak1)
+    values (#{xxfxId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{forumId,jdbcType=INTEGER}, 
+      #{xxfxTitle,jdbcType=VARCHAR}, #{xxfxContent,jdbcType=VARCHAR}, #{xxfxProductType,jdbcType=VARCHAR}, 
+      #{xxfxDianzan,jdbcType=INTEGER}, #{xxfxTime,jdbcType=BIGINT}, #{xxfxModifyTime,jdbcType=BIGINT}, 
+      #{xxfxStatus,jdbcType=INTEGER}, #{xxfxTopTime,jdbcType=BIGINT}, #{xxfxCanceTopTime,jdbcType=BIGINT}, 
+      #{bak1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tuiba.saasadmininster.xxfx.bean.Xxfx" >
+    insert into xxfx
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="xxfxId != null" >
+        xxfx_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="forumId != null" >
+        forum_id,
+      </if>
+      <if test="xxfxTitle != null" >
+        xxfx_title,
+      </if>
+      <if test="xxfxContent != null" >
+        xxfx_content,
+      </if>
+      <if test="xxfxProductType != null" >
+        xxfx_product_type,
+      </if>
+      <if test="xxfxDianzan != null" >
+        xxfx_dianzan,
+      </if>
+      <if test="xxfxTime != null" >
+        xxfx_time,
+      </if>
+      <if test="xxfxModifyTime != null" >
+        xxfx_modify_time,
+      </if>
+      <if test="xxfxStatus != null" >
+        xxfx_status,
+      </if>
+      <if test="xxfxTopTime != null" >
+        xxfx_top_time,
+      </if>
+      <if test="xxfxCanceTopTime != null" >
+        xxfx_cance_top_time,
+      </if>
+      <if test="bak1 != null" >
+        bak1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="xxfxId != null" >
+        #{xxfxId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="forumId != null" >
+        #{forumId,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxTitle != null" >
+        #{xxfxTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="xxfxContent != null" >
+        #{xxfxContent,jdbcType=VARCHAR},
+      </if>
+      <if test="xxfxProductType != null" >
+        #{xxfxProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="xxfxDianzan != null" >
+        #{xxfxDianzan,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxTime != null" >
+        #{xxfxTime,jdbcType=BIGINT},
+      </if>
+      <if test="xxfxModifyTime != null" >
+        #{xxfxModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="xxfxStatus != null" >
+        #{xxfxStatus,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxTopTime != null" >
+        #{xxfxTopTime,jdbcType=BIGINT},
+      </if>
+      <if test="xxfxCanceTopTime != null" >
+        #{xxfxCanceTopTime,jdbcType=BIGINT},
+      </if>
+      <if test="bak1 != null" >
+        #{bak1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tuiba.saasadmininster.xxfx.bean.XxfxExample" resultType="java.lang.Integer" >
+    select count(*) from xxfx
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xxfx
+    <set >
+      <if test="record.xxfxId != null" >
+        xxfx_id = #{record.xxfxId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.forumId != null" >
+        forum_id = #{record.forumId,jdbcType=INTEGER},
+      </if>
+      <if test="record.xxfxTitle != null" >
+        xxfx_title = #{record.xxfxTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xxfxContent != null" >
+        xxfx_content = #{record.xxfxContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xxfxProductType != null" >
+        xxfx_product_type = #{record.xxfxProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xxfxDianzan != null" >
+        xxfx_dianzan = #{record.xxfxDianzan,jdbcType=INTEGER},
+      </if>
+      <if test="record.xxfxTime != null" >
+        xxfx_time = #{record.xxfxTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.xxfxModifyTime != null" >
+        xxfx_modify_time = #{record.xxfxModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.xxfxStatus != null" >
+        xxfx_status = #{record.xxfxStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.xxfxTopTime != null" >
+        xxfx_top_time = #{record.xxfxTopTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.xxfxCanceTopTime != null" >
+        xxfx_cance_top_time = #{record.xxfxCanceTopTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.bak1 != null" >
+        bak1 = #{record.bak1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xxfx
+    set xxfx_id = #{record.xxfxId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      forum_id = #{record.forumId,jdbcType=INTEGER},
+      xxfx_title = #{record.xxfxTitle,jdbcType=VARCHAR},
+      xxfx_content = #{record.xxfxContent,jdbcType=VARCHAR},
+      xxfx_product_type = #{record.xxfxProductType,jdbcType=VARCHAR},
+      xxfx_dianzan = #{record.xxfxDianzan,jdbcType=INTEGER},
+      xxfx_time = #{record.xxfxTime,jdbcType=BIGINT},
+      xxfx_modify_time = #{record.xxfxModifyTime,jdbcType=BIGINT},
+      xxfx_status = #{record.xxfxStatus,jdbcType=INTEGER},
+      xxfx_top_time = #{record.xxfxTopTime,jdbcType=BIGINT},
+      xxfx_cance_top_time = #{record.xxfxCanceTopTime,jdbcType=BIGINT},
+      bak1 = #{record.bak1,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tuiba.saasadmininster.xxfx.bean.Xxfx" >
+    update xxfx
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="forumId != null" >
+        forum_id = #{forumId,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxTitle != null" >
+        xxfx_title = #{xxfxTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="xxfxContent != null" >
+        xxfx_content = #{xxfxContent,jdbcType=VARCHAR},
+      </if>
+      <if test="xxfxProductType != null" >
+        xxfx_product_type = #{xxfxProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="xxfxDianzan != null" >
+        xxfx_dianzan = #{xxfxDianzan,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxTime != null" >
+        xxfx_time = #{xxfxTime,jdbcType=BIGINT},
+      </if>
+      <if test="xxfxModifyTime != null" >
+        xxfx_modify_time = #{xxfxModifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="xxfxStatus != null" >
+        xxfx_status = #{xxfxStatus,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxTopTime != null" >
+        xxfx_top_time = #{xxfxTopTime,jdbcType=BIGINT},
+      </if>
+      <if test="xxfxCanceTopTime != null" >
+        xxfx_cance_top_time = #{xxfxCanceTopTime,jdbcType=BIGINT},
+      </if>
+      <if test="bak1 != null" >
+        bak1 = #{bak1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where xxfx_id = #{xxfxId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tuiba.saasadmininster.xxfx.bean.Xxfx" >
+    update xxfx
+    set user_id = #{userId,jdbcType=INTEGER},
+      forum_id = #{forumId,jdbcType=INTEGER},
+      xxfx_title = #{xxfxTitle,jdbcType=VARCHAR},
+      xxfx_content = #{xxfxContent,jdbcType=VARCHAR},
+      xxfx_product_type = #{xxfxProductType,jdbcType=VARCHAR},
+      xxfx_dianzan = #{xxfxDianzan,jdbcType=INTEGER},
+      xxfx_time = #{xxfxTime,jdbcType=BIGINT},
+      xxfx_modify_time = #{xxfxModifyTime,jdbcType=BIGINT},
+      xxfx_status = #{xxfxStatus,jdbcType=INTEGER},
+      xxfx_top_time = #{xxfxTopTime,jdbcType=BIGINT},
+      xxfx_cance_top_time = #{xxfxCanceTopTime,jdbcType=BIGINT},
+      bak1 = #{bak1,jdbcType=VARCHAR}
+    where xxfx_id = #{xxfxId,jdbcType=INTEGER}
+  </update>
+</mapper>

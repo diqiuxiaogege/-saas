@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tuiba.saasadmininster.xxfxComment.dao.Xxfx_commentMapper" >
+  <resultMap id="BaseResultMap" type="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_comment" >
+    <id column="xxfx_comment_id" property="xxfxCommentId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="xxfx_id" property="xxfxId" jdbcType="INTEGER" />
+    <result column="xxfx_comment_type_id" property="xxfxCommentTypeId" jdbcType="INTEGER" />
+    <result column="xxfx_comment_date" property="xxfxCommentDate" jdbcType="BIGINT" />
+    <result column="xxfx_comment_status" property="xxfxCommentStatus" jdbcType="INTEGER" />
+    <result column="xxfx_comment_status_time" property="xxfxCommentStatusTime" jdbcType="BIGINT" />
+    <result column="bak1" property="bak1" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_comment" extends="BaseResultMap" >
+    <result column="xxfx_comment_content" property="xxfxCommentContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    xxfx_comment_id, user_id, xxfx_id, xxfx_comment_type_id, xxfx_comment_date, xxfx_comment_status, 
+    xxfx_comment_status_time, bak1
+  </sql>
+  <sql id="Blob_Column_List" >
+    xxfx_comment_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_commentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xxfx_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_commentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xxfx_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xxfx_comment
+    where xxfx_comment_id = #{xxfxCommentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from xxfx_comment
+    where xxfx_comment_id = #{xxfxCommentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_commentExample" >
+    delete from xxfx_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_comment" >
+    insert into xxfx_comment (xxfx_comment_id, user_id, xxfx_id, 
+      xxfx_comment_type_id, xxfx_comment_date, xxfx_comment_status, 
+      xxfx_comment_status_time, bak1, xxfx_comment_content
+      )
+    values (#{xxfxCommentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{xxfxId,jdbcType=INTEGER}, 
+      #{xxfxCommentTypeId,jdbcType=INTEGER}, #{xxfxCommentDate,jdbcType=BIGINT}, #{xxfxCommentStatus,jdbcType=INTEGER}, 
+      #{xxfxCommentStatusTime,jdbcType=BIGINT}, #{bak1,jdbcType=VARCHAR}, #{xxfxCommentContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_comment" >
+    insert into xxfx_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="xxfxCommentId != null" >
+        xxfx_comment_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="xxfxId != null" >
+        xxfx_id,
+      </if>
+      <if test="xxfxCommentTypeId != null" >
+        xxfx_comment_type_id,
+      </if>
+      <if test="xxfxCommentDate != null" >
+        xxfx_comment_date,
+      </if>
+      <if test="xxfxCommentStatus != null" >
+        xxfx_comment_status,
+      </if>
+      <if test="xxfxCommentStatusTime != null" >
+        xxfx_comment_status_time,
+      </if>
+      <if test="bak1 != null" >
+        bak1,
+      </if>
+      <if test="xxfxCommentContent != null" >
+        xxfx_comment_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="xxfxCommentId != null" >
+        #{xxfxCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxId != null" >
+        #{xxfxId,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxCommentTypeId != null" >
+        #{xxfxCommentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxCommentDate != null" >
+        #{xxfxCommentDate,jdbcType=BIGINT},
+      </if>
+      <if test="xxfxCommentStatus != null" >
+        #{xxfxCommentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxCommentStatusTime != null" >
+        #{xxfxCommentStatusTime,jdbcType=BIGINT},
+      </if>
+      <if test="bak1 != null" >
+        #{bak1,jdbcType=VARCHAR},
+      </if>
+      <if test="xxfxCommentContent != null" >
+        #{xxfxCommentContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_commentExample" resultType="java.lang.Integer" >
+    select count(*) from xxfx_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xxfx_comment
+    <set >
+      <if test="record.xxfxCommentId != null" >
+        xxfx_comment_id = #{record.xxfxCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.xxfxId != null" >
+        xxfx_id = #{record.xxfxId,jdbcType=INTEGER},
+      </if>
+      <if test="record.xxfxCommentTypeId != null" >
+        xxfx_comment_type_id = #{record.xxfxCommentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.xxfxCommentDate != null" >
+        xxfx_comment_date = #{record.xxfxCommentDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.xxfxCommentStatus != null" >
+        xxfx_comment_status = #{record.xxfxCommentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.xxfxCommentStatusTime != null" >
+        xxfx_comment_status_time = #{record.xxfxCommentStatusTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.bak1 != null" >
+        bak1 = #{record.bak1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xxfxCommentContent != null" >
+        xxfx_comment_content = #{record.xxfxCommentContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update xxfx_comment
+    set xxfx_comment_id = #{record.xxfxCommentId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      xxfx_id = #{record.xxfxId,jdbcType=INTEGER},
+      xxfx_comment_type_id = #{record.xxfxCommentTypeId,jdbcType=INTEGER},
+      xxfx_comment_date = #{record.xxfxCommentDate,jdbcType=BIGINT},
+      xxfx_comment_status = #{record.xxfxCommentStatus,jdbcType=INTEGER},
+      xxfx_comment_status_time = #{record.xxfxCommentStatusTime,jdbcType=BIGINT},
+      bak1 = #{record.bak1,jdbcType=VARCHAR},
+      xxfx_comment_content = #{record.xxfxCommentContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xxfx_comment
+    set xxfx_comment_id = #{record.xxfxCommentId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      xxfx_id = #{record.xxfxId,jdbcType=INTEGER},
+      xxfx_comment_type_id = #{record.xxfxCommentTypeId,jdbcType=INTEGER},
+      xxfx_comment_date = #{record.xxfxCommentDate,jdbcType=BIGINT},
+      xxfx_comment_status = #{record.xxfxCommentStatus,jdbcType=INTEGER},
+      xxfx_comment_status_time = #{record.xxfxCommentStatusTime,jdbcType=BIGINT},
+      bak1 = #{record.bak1,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_comment" >
+    update xxfx_comment
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxId != null" >
+        xxfx_id = #{xxfxId,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxCommentTypeId != null" >
+        xxfx_comment_type_id = #{xxfxCommentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxCommentDate != null" >
+        xxfx_comment_date = #{xxfxCommentDate,jdbcType=BIGINT},
+      </if>
+      <if test="xxfxCommentStatus != null" >
+        xxfx_comment_status = #{xxfxCommentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="xxfxCommentStatusTime != null" >
+        xxfx_comment_status_time = #{xxfxCommentStatusTime,jdbcType=BIGINT},
+      </if>
+      <if test="bak1 != null" >
+        bak1 = #{bak1,jdbcType=VARCHAR},
+      </if>
+      <if test="xxfxCommentContent != null" >
+        xxfx_comment_content = #{xxfxCommentContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where xxfx_comment_id = #{xxfxCommentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_comment" >
+    update xxfx_comment
+    set user_id = #{userId,jdbcType=INTEGER},
+      xxfx_id = #{xxfxId,jdbcType=INTEGER},
+      xxfx_comment_type_id = #{xxfxCommentTypeId,jdbcType=INTEGER},
+      xxfx_comment_date = #{xxfxCommentDate,jdbcType=BIGINT},
+      xxfx_comment_status = #{xxfxCommentStatus,jdbcType=INTEGER},
+      xxfx_comment_status_time = #{xxfxCommentStatusTime,jdbcType=BIGINT},
+      bak1 = #{bak1,jdbcType=VARCHAR},
+      xxfx_comment_content = #{xxfxCommentContent,jdbcType=LONGVARCHAR}
+    where xxfx_comment_id = #{xxfxCommentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tuiba.saasadmininster.xxfxComment.bean.Xxfx_comment" >
+    update xxfx_comment
+    set user_id = #{userId,jdbcType=INTEGER},
+      xxfx_id = #{xxfxId,jdbcType=INTEGER},
+      xxfx_comment_type_id = #{xxfxCommentTypeId,jdbcType=INTEGER},
+      xxfx_comment_date = #{xxfxCommentDate,jdbcType=BIGINT},
+      xxfx_comment_status = #{xxfxCommentStatus,jdbcType=INTEGER},
+      xxfx_comment_status_time = #{xxfxCommentStatusTime,jdbcType=BIGINT},
+      bak1 = #{bak1,jdbcType=VARCHAR}
+    where xxfx_comment_id = #{xxfxCommentId,jdbcType=INTEGER}
+  </update>
+</mapper>

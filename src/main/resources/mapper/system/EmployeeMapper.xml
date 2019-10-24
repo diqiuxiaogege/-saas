@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuiba.saasadmininster.system.mapper.EmployeeMapper">
+    <sql id="findEmployeeDetailSql">
+        SELECT
+        -- 员工id
+        e.employee_id employeeId,
+        -- 部门id
+        e.department_id departmentId,
+        -- 员工姓名
+        e.employee_name employeeName,
+        -- 员工头像
+        e.employee_img_url employeeImgUrl,
+        -- 员工性别
+        e.employee_sex employeeSex,
+        -- 员工年龄
+        e.employee_age employeeAge,
+        -- 员工手机号
+        e.employee_phone employeePhone,
+        -- 员工应急电话
+        e.employee_emergency_phone employeeEmergencyPhone,
+        -- 员工应急姓名
+        e.employee_emergency_name employeeEmergencyName,
+        -- 员工学历
+        e.employee_education employeeEducation,
+        -- 员工毕业院校
+        e.employee_graduation_school employeeGraduationSchool,
+        -- 员工婚姻状态
+        e.employee_marital_status employeeMaritalStatus,
+        -- 员工职位
+        e.employee_position employeePosition,
+        -- 员工地址
+        e.employee_address employeeAddress,
+        -- 员工现居地
+        e.employee_current_residence employeeCurrentResidence,
+        -- 员工入职日期
+        e.employee_entry_date employeeEntryDate,
+        -- 员工信息录入时间
+        e.employee_add_time employeeAddTime,
+        -- 员工信息修改时间
+        e.employee_modify_time employeeModifyTime,
+        -- 员工账户密码(123456)
+        e.employee_password employeePassword,
+        -- 员工账号昵称
+        e.employee_nickname employeeNickname,
+        -- 员工状态（0正常 1离职 2 异常 ）
+        e.employee_status employeeStatus,
+        -- 员工签名
+        e.employee_signature employeeSignature,
+        -- 员工账号所含积分
+        e.employee_score employeeScore,
+        -- 员工账户所属角色
+        e.role_id roleId,
+        -- 员工最后消息推送id
+        e.message_push_id messagePushId,
+        -- 最后登录时间
+        e.last_login_time lastLoginTime,
+        -- 预留字段
+        e.bak1 bak1,
+
+        GROUP_CONCAT(r.role_id) roleId,
+        GROUP_CONCAT(r.role_name) roleName
+        FROM
+        employee e
+        LEFT JOIN department d ON (e.department_id = d.department_id)
+        LEFT JOIN role r ON r.role_id = e.role_id
+        WHERE 1 = 1
+        <if test="employee.employeePhone != null and employee.employeePhone != ''">
+            AND e.employee_phone = #{employee.employeePhone}
+        </if>
+        <if test="employee.employeeName != null and employee.employeeName != ''">
+            AND e.employee_name = #{employee.employeeName}
+        </if>
+        <if test="employee.departmentId != null and employee.departmentId != ''">
+            AND d.department_id = #{employee.departmentId}
+        </if>
+        <if test="employee.employeeSex != null and employee.employeeSex != ''">
+            AND e.employee_sex = #{employee.employeeSex}
+        </if>
+        <if test="employee.employeeStatus != null and employee.employeeStatus != ''">
+            AND e.employee_status = #{employee.employeeStatus}
+        </if>
+        <if test="employee.employeePhone != null and employee.employeePhone != ''">
+            AND e.employee_phone = #{employee.employeePhone}
+        </if>
+        <if test="employee.createTimeFrom != null and employee.createTimeFrom !=''">
+            And e.employee_add_time &gt; #{employee.createTimeFrom}
+        </if>
+        <if test="employee.createTimeTo!= null and employee.createTimeTo !=''">
+            And e.employee_add_time &lt; #{employee.createTimeTo}
+        </if>
+        GROUP BY
+        e.employee_name,
+        e.employee_id,
+        e.employee_phone,
+        e.employee_status,
+        e.employee_add_time,
+        e.employee_sex,
+        e.department_id,
+        e.last_login_time,
+        e.employee_modify_time,
+        e.employee_img_url
+    </sql>
+
+    <select id="findEmployeeDetailPage" parameterType="employee" resultType="employee">
+        <include refid="findEmployeeDetailSql"/>
+    </select>
+
+    <select id="findEmployeeDetail" parameterType="employee" resultType="employee">
+        <include refid="findEmployeeDetailSql"/>
+    </select>
+
+    <select id="findByEmployeeName" parameterType="employee" resultType="employee">
+        SELECT
+--         员工id
+        e.employee_id employeeId,
+--         部门id
+        e.department_id departmentId,
+--         员工姓名
+        e.employee_name employeeName,
+--         员工头像
+        e.employee_img_url employeeImgUrl,
+--         员工性别
+        e.employee_sex employeeSex,
+--         员工年龄
+        e.employee_age employeeAge,
+--         员工手机号
+        e.employee_phone employeePhone,
+--         员工应急电话
+        e.employee_emergency_phone employeeEmergencyPhone,
+--         员工应急姓名
+        e.employee_emergency_name employeeEmergencyName,
+--         员工学历
+        e.employee_education employeeEducation,
+--         员工毕业院校
+        e.employee_graduation_school employeeGraduationSchool,
+--         员工婚姻状态
+        e.employee_marital_status employeeMaritalStatus,
+--         员工职位
+        e.employee_position employeePosition,
+--         员工地址
+        e.employee_address employeeAddress,
+--         员工现居地
+        e.employee_current_residence employeeCurrentResidence,
+--         员工入职日期
+        e.employee_entry_date employeeEntryDate,
+--         员工信息录入时间
+        e.employee_add_time employeeAddTime,
+--         员工信息修改时间
+        e.employee_modify_time employeeModifyTime,
+--         员工账户密码(123456)
+        e.employee_password employeePassword,
+--         员工账号昵称
+        e.employee_nickname employeeNickname,
+--         员工状态（0正常 1离职 2 异常 ）
+        e.employee_status employeeStatus,
+--         员工签名
+        e.employee_signature employeeSignature,
+--         员工账号所含积分
+        e.employee_score employeeScore,
+--         员工账户所属角色
+        e.role_id roleId,
+--         员工最后消息推送id
+        e.message_push_id messagePushId,
+--         最后登录时间
+        e.last_login_time lastLoginTime,
+--         预留字段
+        e.bak1 bak1,
+--         标签
+        e.is_tab isTab,
+--         主题
+        e.theme theme,
+--         部门名称
+        d.department_name departmentName,
+        GROUP_CONCAT(r.role_id) roleId,
+        GROUP_CONCAT(r.ROLE_NAME) roleName
+        FROM
+        employee e
+        LEFT JOIN department d ON (e.department_id = d.department_id)
+        LEFT JOIN role r ON r.role_id = e.role_id
+        WHERE  e.employee_name = #{employeeName}
+        GROUP BY
+            e.employee_name,
+            e.employee_phone,
+            e.employee_id,
+            e.employee_password,
+            e.employee_status,
+            e.employee_add_time,
+            e.employee_sex,
+            e.department_id,
+            e.last_login_time,
+            e.employee_modify_time,
+            e.employee_img_url,
+            e.theme,
+            e.is_tab
+    </select>
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuiba.saasadmininster.system.mapper.UserMapper">
+
+    <sql id="findUserDetailSql">
+        SELECT
+        u.user_id userId,
+        u.username username,
+        u.sex sex,
+        u.real_name realName,
+        u.user_qq userQq,
+        u.mobile mobile,
+        u.mail mail,
+        u.nickname nickname,
+        u.status status,
+        u.create_time createTime,
+        u.last_login_time lastLoginTime,
+        u.modify_time modifyTime,
+        u.score score,
+        u.signature signature,
+        u.avatar avatar,
+        u.register_address registerAddress,
+        d.department_name departmentName,
+        GROUP_CONCAT(r.role_id) roleId,
+        GROUP_CONCAT(r.role_name) roleName
+        FROM
+        user u
+        LEFT JOIN employee e on (e.user_id = u.user_id)
+        LEFT JOIN department d ON (e.department_id = d.department_id)
+        LEFT JOIN user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN role r ON r.role_id = ur.role_id
+        WHERE 1 = 1
+        <if test="user.username != null and user.username != ''">
+            AND u.username  LIKE CONCAT('%',#{user.username},'%')
+        </if>
+        <if test="user.realName != null and user.realName != ''">
+            AND u.real_name = #{user.realName}
+        </if>
+        <if test="user.mobile != null and user.mobile != ''">
+            AND u.mobile = #{user.mobile}
+        </if>
+        <if test=" user.sex != null and user.sex != '' ">
+            AND u.sex = #{user.sex}
+        </if>
+        <if test=" user.mail != null and user.mail != '' ">
+            AND u.mail = #{user.mail}
+        </if>
+        <if test=" user.nickname != null and user.nickname != '' ">
+            AND u.nickname = #{user.nickname}
+        </if>
+        <if test=" user.status != null and user.status != '' ">
+            AND u.status = #{user.status}
+        </if>
+        <if test="user.createTimeFrom != null and user.createTimeFrom != '' and user.createTimeFrom != 'NaN'">
+            And u.create_time &gt; #{user.createTimeFrom}
+        </if>
+        <if test=" user.createTimeTo != null and user.createTimeTo != '' and user.createTimeTo != 'NaN'">
+            And u.create_time &lt; #{user.createTimeTo}
+        </if>
+        GROUP BY
+        u.user_id,
+        u.real_name,
+        u.user_qq,
+        u.mobile,
+        u.mail,
+        u.score,
+        u.signature,
+        u.username,
+        u.nickname,
+        u.status,
+        u.create_time,
+        u.last_login_time,
+        u.modify_time,
+        u.avatar
+    </sql>
+    <select id="findUserDetailPage" parameterType="user" resultType="user">
+        <include refid="findUserDetailSql"/>
+    </select>
+
+    <select id="findUserDetail" parameterType="user" resultType="user">
+        <include refid="findUserDetailSql"/>
+    </select>
+
+    <select id="findByName" parameterType="string" resultType="user">
+        SELECT
+        u.user_id userId,
+        u.username username,
+        u.sex sex,
+        u.real_name realName,
+        u.user_qq userQq,
+        u.mobile mobile,
+        u.mail mail,
+        u.score score,
+        u.signature signature,
+        u.nickname nickname,
+        u.password password,
+        u.status status,
+        u.create_time createTime,
+        u.last_login_time lastLoginTime,
+        u.register_address registerAddress,
+        u.modify_time modifyTime,
+        u.avatar avatar,
+        u.theme theme,
+        u.is_tab isTab,
+        d.department_name departmentName,
+        GROUP_CONCAT(r.role_id) roleId,
+        GROUP_CONCAT(r.role_name) roleName
+        FROM
+        user u
+        LEFT JOIN employee e on(u.user_id = e.user_id)
+        LEFT JOIN department d ON (e.department_id = d.department_id)
+        LEFT JOIN user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN role r ON r.role_id = ur.role_id
+        WHERE  u.username = #{username}
+        GROUP BY
+            u.username,
+            u.sex,
+            u.nickname,
+            u.user_id,
+            u.real_name ,
+            u.user_qq ,
+            u.mobile ,
+            u.mail ,
+            u.score,
+            u.signature,
+            u.password,
+            u.status,
+            u.create_time,
+            u.last_login_time,
+            u.modify_time,
+            u.avatar,
+            u.theme,
+            u.is_tab
+    </select>
+</mapper>
